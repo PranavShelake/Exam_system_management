@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form method="post" class="container">
+        {% csrf_token %}
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <h2>Student Login</h2>
+        <div class="form-group">
+            <input type="email" name="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            <i class="fas fa-lock" onclick="togglePassword()"></i>
+        </div>
+        <button type="submit">Login</button>
+        <p><a href="{% url 'student:student_verification' %}">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="{% url 'student:student_register' %}">Sign Up</a></p>
+    </form>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = passwordInput.nextElementSibling;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('fa-lock');
+                passwordIcon.classList.add('fa-unlock');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('fa-unlock');
+                passwordIcon.classList.add('fa-lock');
+            }
+        }
+    </script>
+</body>
+</html>

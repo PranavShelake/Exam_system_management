@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Question Paper</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>{{ college_name }} - {{ course_name }} ({{ course_code }})</h2>
+        <p><strong>Exam Type:</strong> {{ exam_type }}</p>
+        <p><strong>Exam Date:</strong> {{ exam_date }}</p>
+        <p><strong>Exam Time:</strong> {{ exam_time }}</p>
+        <p><strong>Maximum Marks:</strong> {{ max_marks }}</p>
+        <p><strong>Instructions:</strong> {{ instructions }}</p>
+
+        <h3>Questions</h3>
+        <ol>
+            {% for question in questions %}
+            <li>
+                <p><strong>{{ question.question }}</strong></p>
+                <p><strong>Marks:</strong> {{ question.marks }}</p>
+                <p><strong>Correct Answer:</strong> {{ question.answer }}</p>
+
+                {% if question.sub_questions %}
+                <ul>
+                    {% for sub_question in question.sub_questions %}
+                    <li>
+                        <p><strong>Sub-question:</strong> {{ sub_question.text }}</p>
+                        <p><strong>Marks:</strong> {{ sub_question.marks }}</p>
+                        <p><strong>Answer:</strong> {{ sub_question.answer }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ol>
+
+        <h3>Choice Questions</h3>
+        {% for group in choice_questions %}
+        <div class="choice-group">
+            <p><strong>Instructions:</strong> {{ group.instructions }}</p>
+            <ol>
+                {% for choice in group.questions %}
+                <li>
+                    <p><strong>{{ choice.question }}</strong></p>
+                    <p><strong>Marks:</strong> {{ choice.marks }}</p>
+                    <p><strong>Answer:</strong> {{ choice.answer }}</p>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

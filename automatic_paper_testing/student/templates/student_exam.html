@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Your Answer PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Your Answer PDF</h1>
+
+        <!-- Success/Error Messages -->
+        <div class="success-message" id="success-message" style="display: none;">PDF uploaded successfully!</div>
+        <div class="error-message" id="error-message" style="display: none;">Error uploading PDF. Please try again.</div>
+
+        <!-- PDF Upload Form -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="answer_pdf">Select Your Answer PDF:</label>
+            <input type="file" name="answer_pdf" id="answer_pdf" accept=".pdf" required>
+
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</body>
+</html>

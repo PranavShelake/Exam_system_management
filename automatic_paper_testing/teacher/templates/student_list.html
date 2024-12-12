@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .student-table th {
+            background-color: #f4f4f9;
+            color: #4CAF50;
+        }
+
+        .student-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .action-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-button.remove {
+            background-color: #DC3545;
+        }
+
+        .action-button.remove:hover {
+            background-color: #b21f2d;
+        }
+
+        .empty-message {
+            text-align: center;
+            margin: 20px 0;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student List</h1>
+    <div class="container">
+        <!-- Search Form -->
+        <form method="GET" action="">
+            <input 
+                type="text" 
+                name="q" 
+                value="{{ query|default:'' }}" 
+                placeholder="Search by Enrollment Number">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Student Table -->
+        {% if students %}
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>Enrollment Number</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Phone</th>
+                    <th>Approved</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.enrollment_number }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.course }}</td>
+                    <td>{{ student.phone_number|default:'N/A' }}</td>
+                    <td>{{ student.is_approved|yesno:"Yes,No" }}</td>
+                    <td>
+                        {% if student in assigned_students %}
+                        <form method="POST" action="{% url 'teacher:remove_student' student.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="action-button remove">Remove</button>
+                        </form>
+                        {% else %}
+                        <form method="POST" action="{% url 'teacher:add_student' student.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="action-button">Add</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-message">No students found. Try searching with a different enrollment number.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

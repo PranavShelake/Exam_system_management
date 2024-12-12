@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <style>
+        /* Reuse the styles from previous design */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #4a00e0, #8e2de2);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        nav h1 {
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ccc;
+        }
+
+        .heading {
+            text-align: center;
+            margin-top: 6rem;
+        }
+
+        .heading h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .heading p {
+            font-size: 1.2rem;
+            color: #f1f1f1;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 1rem;
+        }
+
+        .block {
+            background: #ffffff;
+            color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            text-align: center;
+            flex: 1;
+            max-width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .block:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .block h3 i {
+            font-size: 1.8rem;
+            color: #007bff;
+        }
+
+        .block p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .block a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .block a:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>Teacher Dashboard</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url 'teacher:teacher_logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="heading">
+        <h1>Teacher Dashboard</h1>
+        <p>Choose an option to continue:</p>
+    </div>
+    <div class="container">
+        <div class="block" style="animation-delay: 0.2s;">
+            <h3><i class="fas fa-file-alt"></i> Create Paper</h3>
+            <p>Design and create question papers for exams.</p>
+            <a href="/create_question_paper">Start Now</a>
+        </div>
+
+        <div class="block" style="animation-delay: 0.4s;">
+            <h3><i class="fas fa-tasks"></i> Manage Exams</h3>
+            <p>Schedule and oversee exams for students.</p>
+            <a href="/manage_exam">Manage Now</a>
+        </div>
+
+        <div class="block" style="animation-delay: 0.6s;">
+            <h3><i class="fas fa-tasks"></i> Add students </h3>
+            <p>Add yours student</p>
+            <a href="/student_list">Add students</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Exam Management System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
